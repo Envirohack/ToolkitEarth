@@ -35,6 +35,11 @@ User should also:
 Subteams worked on:
 * Creating a mongodb database that could be populated by cron job with information from BOM such as precipitation and user info. The data accessed is NetCDF from ACCESS OpenDAP (Numerical model from BoM)        http://opendap.bom.gov.au:8080/thredds/catalogs/nmoc-catalogs/nmoc-access-catalog.html.
 
+### index.html
+This is a work in progress. Currently just puts a leaflet map and some buttons - needs more love.
+### server.js and enviro.js
+These are files to run in node.js. These use express to make a Resful API for the MongoDB weather-by-location DB. Note: enviro.js needs to be under a /routes/ folder. Will put a full working directory up after the hack session.  
+
 ## Thoughts re. roadmap/wishlist
 
 tl;dr: Draw a base map (OSM/MapBox/Leaflet?) with a LandSat option view mode, and then allow for weather input from both local-based weather stations (e.g. SmartCitizen.me/arduino)  and BOM/other upstream data sources. (If someone is super smart they can think about doing analysis of the local data and upstream data sources…)
