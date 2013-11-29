@@ -33,7 +33,7 @@ User should also:
 ## Code
 
 Subteams worked on:
-* Creating a mongodb database that could be populated by cron job with information from BOM such as precipitation and user info
+* Creating a mongodb database that could be populated by cron job with information from BOM such as precipitation and user info. The data accessed is NetCDF from ACCESS OpenDAP (Numerical model from BoM)        http://opendap.bom.gov.au:8080/thredds/catalogs/nmoc-catalogs/nmoc-access-catalog.html.
 
 ## Thoughts re. roadmap/wishlist
 
