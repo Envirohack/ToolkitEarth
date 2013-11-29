@@ -5,7 +5,9 @@ ToolkitEarth - connecting farmers to the latest satellite and weather data.
 
 ## Concept
 
-fill me in
+Easy access for farmers to location-specific weather, current and historic satellite imagery
+
+Currently a lot of data are (becoming) freely available, however it still requires substantial knowledge where these data are, how to download data in a usable format for the wanted area of interest only- instead of full scenes- and how to process them to obtain meaningful information. Most farmers struggle with the process. This project aims to give farmers easy access to information that is relevant and meaningful to the land in their care. We hope to assist them in informed decision making and to manage their resources in a sustainable manner.
 
 ## Code
 
