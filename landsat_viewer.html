@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+<link  rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="../dist/leaflet.ie.css" /><![endif]-->
+</head>
+<body>
+	<div id="map" style="width: 600px; height: 400px"></div>
+	<div id="sliderPanel"></div>
+	<select id='dateSelect' name='dateSelect'></select>
+ <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+ <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+ <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script>
+
+		var map = L.map('map').setView([-35.5, 149], 15);
+
+		L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+		}).addTo(map);
+
+
+		function onMapClick(e) {
+			popup
+				.setLatLng(e.latlng)
+				.setContent("You clicked the map at " + e.latlng.toString())
+				.openOn(map);
+		}
+
+		map.on('click', onMapClick);
+		
+		var wmsLayer
+		var sorted
+		function switchWMSLayer(url) {
+			if (wmsLayer) {
+				map.removeLayer(wmsLayer)
+			}
+			
+		   	 wmsLayer = L.tileLayer.wms(url, {
+			    layers: 'FalseColour741',
+			    format: 'image/png',
+			    transparent: true,
+			}).addTo(map);
+			
+		}
+		
+		$().ready(function(){
+			$('#dateSelect').change(function() {
+				var url = sorted[this.value]
+				switchWMSLayer(url)
+			})
+			
+			var dev = true
+			var queryURL = 'http://www.ga.gov.au/search/api/search/results'
+			var queryMethod = 'POST'
+			if (dev) {
+				queryURL = 'query.json'
+				queryMethod = 'GET'
+			}
+			
+			$.ajax(queryURL,
+			{
+				dataType: 'json',
+				type: queryMethod,
+			    params: {
+			    	"searchTerm":"landsat",
+			    	"northLat":-35.222,
+			    	"southLat":-35.343,
+			    	"westLong":149.047,
+			    	"eastLong":149.212,
+			    	"startPosition":0},
+			   	success: function(data,status){
+				   	sorted = {}
+				   	$.each(data.searchResults, function(i, val){
+				   		var len = val.identifier.length
+				   		dateStr = val.identifier.substr(len-8,8)
+				   		sorted[dateStr] = val.dcUris[1].value
+				   	})
+				   	
+				   	$.each(sorted, function(i,val){
+				   		$('<option></option>',{'id':val,'text':i}).appendTo('#dateSelect')
+				   	})
+				   	
+				   	
+			   }
+		  })
+		})
+
+	</script>
+</body>
+</html>
